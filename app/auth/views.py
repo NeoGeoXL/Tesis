@@ -47,8 +47,8 @@ def signup():
         password = signup_form.password.data
         user_doc = get_user(username)
         if user_doc.to_dict() is None:
-            password_hash = generate_password_hash(password)
-            user_data = UserData(username, password_hash)
+            #password_hash = generate_password_hash(password)
+            user_data = UserData(username, password)
             user_put(user_data)
 
             user = UserModel(user_data)

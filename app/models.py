@@ -26,3 +26,4 @@ class UserModel(UserMixin):
         )
 
         return UserModel(user_data)
+
