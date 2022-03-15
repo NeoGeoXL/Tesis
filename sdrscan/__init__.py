@@ -178,17 +178,6 @@ def procesamiento(f_min,f_max,canales):
                 #return 0
     return data
 
-def grafica(datos):
-
-    sns.lineplot(x='Frecuencia', y='Potencia', data=datos)
-    CURRENT_DIR=os.getcwd()
-    DATA_DIR=os.path.join(CURRENT_DIR,os.pardir,"app","static","images")
-    DIR=os.path.join(DATA_DIR,"grafica.png")
-    #plt.savefig(DIR)
-    #plt.savefig(DATA_DIR+'\grafica.png')
-    plt.savefig(r'C:\Users\ggarc\Desktop\Tesis\app\static\images\grafica.png')
-    plt.show()
-
 
 def procesamiento_diccionarios(datos):
     datos.set_index('Frecuencia',inplace=True)
