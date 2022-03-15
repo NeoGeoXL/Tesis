@@ -1,4 +1,5 @@
 from ensurepip import bootstrap
+from filecmp import DEFAULT_IGNORES
 from flask import  request, make_response, redirect, render_template, session, url_for, flash
 from flask_login import login_required, current_user
 from app import create_app
@@ -65,18 +66,19 @@ def fm():
     user_ip = session.get('user_ip')
     username = current_user.id
 
+    data1_fm=primera_iteracion_fm()
+    data2=segunda_iteracion_fm()
+    data3=tercera_iteracion_fm()
+    data4=cuarta_iteracion_fm()
+    data5=quinta_iteracion_fm()
 
 
     context = {
-        'user_ip': user_ip,
-        'todos': get_todos(user_id=username),
         'username': username,
+        'data1_fm': data1_fm,
 
     }
-    primera_iteracion_fm()
-    segunda_iteracion_fm()
-    tercera_iteracion_fm()
-    cuarta_iteracion_fm()
-    quinta_iteracion_fm()
+    
 
     return render_template('fm.html',**context)
+

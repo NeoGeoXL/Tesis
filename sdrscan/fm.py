@@ -31,9 +31,11 @@ def primera_iteracion_fm():
         'canal 20': [91.8000,91.99000,'libre'],
     
         }
-
-    procesamiento(f_min,f_max,canales)
-
+    #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
+    datos=procesamiento(f_min,f_max,canales)
+    espectro = procesamiento_diccionarios(datos)
+    print (espectro)
+    return espectro
             
 
 def segunda_iteracion_fm():
@@ -63,7 +65,11 @@ def segunda_iteracion_fm():
         'canal 39': [95.6000,95.79000,'usado'],
         'canal 40': [95.8000,95.99000,'libre'],
         } 
-    procesamiento(f_min,f_max,canales)
+    #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
+    datos=procesamiento(f_min,f_max,canales)
+    espectro = procesamiento_diccionarios(datos)
+    print (espectro)
+    return espectro
 
 def tercera_iteracion_fm():
 
@@ -93,9 +99,11 @@ def tercera_iteracion_fm():
         'canal 59': [99.6000,99.79000,'usado'],
         'canal 60': [99.8000,99.99000,'libre'],
         }  
-    procesamiento(f_min,f_max,canales)
-
-
+    #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
+    datos=procesamiento(f_min,f_max,canales)
+    espectro = procesamiento_diccionarios(datos)
+    print (espectro)
+    return espectro
 
 def cuarta_iteracion_fm():
 
@@ -125,8 +133,11 @@ def cuarta_iteracion_fm():
         'canal 79': [103.6000,103.79000,'usado'],
         'canal 80': [103.8000,103.99000,'libre'],
         }  
-    procesamiento(f_min,f_max,canales)
-
+    #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
+    datos=procesamiento(f_min,f_max,canales)
+    espectro = procesamiento_diccionarios(datos)
+    print (espectro)
+    return espectro
 
 def quinta_iteracion_fm():
 
@@ -156,7 +167,9 @@ def quinta_iteracion_fm():
         'canal 99': [107.6000,107.79000,'usado'],
         'canal 100': [107.8000,107.99000,'libre'],
         }  
-    procesamiento(f_min,f_max,canales)
-
-
+    #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
+    datos=procesamiento(f_min,f_max,canales)
+    espectro = procesamiento_diccionarios(datos)
+    print (espectro)
+    return espectro
 

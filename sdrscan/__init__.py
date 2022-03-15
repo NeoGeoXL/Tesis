@@ -7,6 +7,7 @@ from datetime import datetime
 from scipy import signal
 import os
 from sklearn.metrics import mean_squared_error
+import seaborn as sns
 
 
 def hacer_potencia(psd_max):
@@ -160,8 +161,8 @@ def procesamiento(f_min,f_max,canales):
             f_max_canal=values[1]
 
             corr,data_canal,rmse=run(data,f_min_canal,f_max_canal,umbral,senal_referencia)
-            print('El rmse es: '+ str(rmse))
-            print('La correlacion es ' + str(corr))
+            #print('El rmse es: '+ str(rmse))
+            #print('La correlacion es ' + str(corr))
             if corr < 0.5 and rmse > 10 :
                 maxim=data_canal['Potencia'].max()
                 idmax=data_canal['Potencia'].idxmax()
@@ -175,3 +176,29 @@ def procesamiento(f_min,f_max,canales):
             else:
                 print('No hay interferencia en el ' + str(key))
                 #return 0
+    return data
+
+def grafica(datos):
+
+    sns.lineplot(x='Frecuencia', y='Potencia', data=datos)
+    CURRENT_DIR=os.getcwd()
+    DATA_DIR=os.path.join(CURRENT_DIR,os.pardir,"app","static","images")
+    DIR=os.path.join(DATA_DIR,"grafica.png")
+    #plt.savefig(DIR)
+    #plt.savefig(DATA_DIR+'\grafica.png')
+    plt.savefig(r'C:\Users\ggarc\Desktop\Tesis\app\static\images\grafica.png')
+    plt.show()
+
+
+def procesamiento_diccionarios(datos):
+    datos.set_index('Frecuencia',inplace=True)
+    datos=datos.rename_axis('Frecuencia')
+    datos_potencia = datos['Potencia'].tolist()
+    datos=datos.to_dict(orient='split')
+    del datos['columns']
+    espectro = {
+        'Frecuencia': datos['index'],
+        'Potencia': datos_potencia,
+    }
+    return espectro
+    
