@@ -32,10 +32,10 @@ def primera_iteracion_fm():
     
         }
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
-    datos=procesamiento(f_min,f_max,canales)
+    datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
     print (espectro)
-    return espectro
+    return espectro, espuria, descision
             
 
 def segunda_iteracion_fm():

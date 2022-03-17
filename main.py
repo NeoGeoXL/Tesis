@@ -4,7 +4,7 @@ from flask import  request, make_response, redirect, render_template, session, u
 from flask_login import login_required, current_user
 from app import create_app
 from app.forms import LoginForm, TodoForm, DeleteTodoForm
-from app.firestore_service import delete_todo, get_users, get_todos, put_todo
+from app.firestore_service import *
 from sdrscan.fm import *
 
 app = create_app()
@@ -66,11 +66,11 @@ def fm():
     user_ip = session.get('user_ip')
     username = current_user.id
 
-    data1_fm=primera_iteracion_fm()
-    data2=segunda_iteracion_fm()
+    data1_fm, espuria, descision =primera_iteracion_fm()
+    '''data2=segunda_iteracion_fm()
     data3=tercera_iteracion_fm()
     data4=cuarta_iteracion_fm()
-    data5=quinta_iteracion_fm()
+    data5=quinta_iteracion_fm()'''
 
 
     context = {
@@ -79,6 +79,24 @@ def fm():
 
     }
     
-
+    put_signal_fm(user_id=username, signal=data1_fm)
+    put_alarma_fm(user_id=username, parasita=espuria)
+    print(descision)
     return render_template('fm.html',**context)
 
+
+ 
+@app.route('/alarmas', methods=['GET', 'POST'])
+@login_required
+def alarmas():
+    user_ip = session.get('user_ip')
+    username = current_user.id
+    alarmas = get_alarma_fm(user_id=username)
+    
+    context = {
+        'username': username,
+        'alarmas': alarmas,
+
+    }
+    print(alarmas)
+    return render_template('alarmas.html',**context)

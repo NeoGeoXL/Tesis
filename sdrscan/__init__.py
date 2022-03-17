@@ -124,7 +124,7 @@ def minimun_signal_detectable(dict,data):
                 umbral = data_canal['Potencia'].max()
                 senal_referencia=data_canal['Potencia'].apply(detection_limit,args=(umbral,umbral))
                 
-    print('El umbral es: '+ str(umbral)+' dBm'+' del '+str(key))
+    #print('El umbral es: '+ str(umbral)+' dBm'+' del '+str(key))
     return umbral, senal_referencia   
 
     
@@ -163,21 +163,42 @@ def procesamiento(f_min,f_max,canales):
             corr,data_canal,rmse=run(data,f_min_canal,f_max_canal,umbral,senal_referencia)
             #print('El rmse es: '+ str(rmse))
             #print('La correlacion es ' + str(corr))
+            maxim=data_canal['Potencia'].max()
+            idmax=data_canal['Potencia'].idxmax()
+            parasita = data_canal.loc[idmax]
+            max_freq=parasita['Frecuencia']
+            max_pot=parasita['Potencia']
+            print(parasita)
+            print(max_freq)
+            print(max_pot)
+            espuria={
+                    'Frecuencia':max_freq,
+                    'Potencia':max_pot,
+                    }
+            print(espuria)
+            #par=parasita.to_dict()
+            #print(par)
             if corr < 0.5 and rmse > 10 :
                 maxim=data_canal['Potencia'].max()
                 idmax=data_canal['Potencia'].idxmax()
                 #print(rmse)
                 if maxim > -20 and maxim < 200:
                     parasita = data_canal.loc[idmax]
-                    print(parasita)    #necesitas devolver esto en la funcion final
-                    print(maxim)
-                    #return parasita , 1
+                    max_freq=parasita['Frecuencia']
+                    max_pot=parasita['Potencia']
+                    print(parasita)
+                    print(max_freq)
+                    print(max_pot)
+                    espuria={
+                        'Frecuencia':max_freq,
+                         'Potencia':max_pot,
+                    }
+                    return data, espuria , 1 #El 1 indica que se encontro una espuria
                     #Para la app web mandas un diccionario con 1 si hay una frecuencia parasita y el valor de la frecuencia y 0 si no hay frecuencia parasita
             else:
                 print('No hay interferencia en el ' + str(key))
-                #return 0
-    return data
-
+    
+    return data, espuria, 0 # El 0 indica que no se encontro una espuria
 
 def procesamiento_diccionarios(datos):
     datos.set_index('Frecuencia',inplace=True)

@@ -1,6 +1,7 @@
 import firebase_admin 
 from firebase_admin import credentials
 from firebase_admin import firestore
+from matplotlib.pyplot import get
 
 credentials = credentials.ApplicationDefault()
 firebase_admin.initialize_app(credentials)
@@ -37,4 +38,19 @@ def update_todo(user_id, todo_id, done):
 
 def get_todo_ref(user_id, todo_id):
     return db.document('users/{}/todos/{}'.format(user_id, todo_id))
-    
+
+def put_signal_fm(user_id, signal):
+    signal_ref_fm = db.collection('users').document(user_id).collection('DatosFM').document()
+    signal_ref_fm.set(signal)
+
+def put_alarma_fm(user_id, parasita):
+    alarma_ref_fm = db.collection('users').document(user_id).collection('Alarmas').document()
+    alarma_ref_fm.set(parasita)
+
+def get_all_documents_of_a_collection(collection_ref):
+    docs = collection_ref.stream()
+    return [doc.to_dict() for doc in docs]
+   
+def get_alarma_fm(user_id):
+    reference= db.collection('users').document(user_id).collection('Alarmas')
+    return get_all_documents_of_a_collection(reference)

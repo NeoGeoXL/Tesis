@@ -24,7 +24,7 @@
                 <li><a href="{{ url_for('index') }}">Informacion</a></li>
                 <li><a href="{{ url_for('fm') }}">Escanear FM</a></li>
                 <li><a href="https://platzi.com" target="_blank">Escanear TV</a></li>
-                <li><a href="https://platzi.com" target="_blank">Mis Alarmas</a></li>
+                <li><a href="{{ url_for('alarmas') }}">Mis Alarmas</a></li>
                 {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
                 {% endif %}
