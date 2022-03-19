@@ -7,7 +7,7 @@ from datetime import datetime
 from scipy import signal
 import os
 from sklearn.metrics import mean_squared_error
-import seaborn as sns
+
 
 
 def hacer_potencia(psd_max):
