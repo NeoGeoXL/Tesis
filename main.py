@@ -5,7 +5,8 @@ from flask_login import login_required, current_user
 from app import create_app
 from app.forms import LoginForm, TodoForm, DeleteTodoForm
 from app.firestore_service import *
-from sdrscan.fm import *
+from sdrscanfm.fm import *
+from sdrscantv.tv import *
 
 app = create_app()
 
@@ -81,9 +82,34 @@ def fm():
     
     put_signal_fm(user_id=username, signal=data1_fm)
     put_alarma_fm(user_id=username, parasita=espuria)
+    print(espuria)
     print(descision)
     return render_template('fm.html',**context)
 
+@app.route('/tv_uhf', methods=['GET', 'POST'])
+@login_required
+def tv_uhf():
+    user_ip = session.get('user_ip')
+    username = current_user.id
+
+    data1_tv, espuria, descision =primera_iteracion_tv()
+    '''data2=segunda_iteracion_fm()
+    data3=tercera_iteracion_fm()
+    data4=cuarta_iteracion_fm()
+    data5=quinta_iteracion_fm()'''
+
+
+    context = {
+        'username': username,
+        'data1_fm': data1_tv,
+
+    }
+    
+    #put_signal_tv(user_id=username, signal=data1_tv)
+    #put_alarma_tv(user_id=username, parasita=espuria)
+    print(data1_tv)
+    print(descision)
+    return render_template('tv_uhf.html',**context)
 
  
 @app.route('/alarmas', methods=['GET', 'POST'])

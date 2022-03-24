@@ -168,7 +168,7 @@ def procesamiento(f_min,f_max,canales):
             parasita = data_canal.loc[idmax]
             max_freq=parasita['Frecuencia']
             max_pot=parasita['Potencia']
-            print(parasita)
+            '''print(parasita)
             print(max_freq)
             print(max_pot)
             espuria={
@@ -177,7 +177,7 @@ def procesamiento(f_min,f_max,canales):
                     }
             print(espuria)
             #par=parasita.to_dict()
-            #print(par)
+            #print(par)'''
             if corr < 0.5 and rmse > 10 :
                 maxim=data_canal['Potencia'].max()
                 idmax=data_canal['Potencia'].idxmax()
@@ -197,6 +197,10 @@ def procesamiento(f_min,f_max,canales):
                     #Para la app web mandas un diccionario con 1 si hay una frecuencia parasita y el valor de la frecuencia y 0 si no hay frecuencia parasita
             else:
                 print('No hay interferencia en el ' + str(key))
+                espuria={
+                        'Frecuencia':0,
+                         'Potencia':0,
+                    }
     
     return data, espuria, 0 # El 0 indica que no se encontro una espuria
 

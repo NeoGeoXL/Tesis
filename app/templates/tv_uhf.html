@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+    {{ super() }}
+    Usuario
+{% endblock %}
+
+{% block content %}
+    {% if username %}
+        <h1>Bienvenido, {{ username | capitalize }}</h1>
+    {% endif %}
+
+    <h2>Prueba para TV</h2>
+    
+    <h3>{{data1_tv}}</h3>
+{% endblock %}

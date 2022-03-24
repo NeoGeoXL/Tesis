@@ -1,4 +1,4 @@
-from sdrscan import *
+from sdrscanfm import *
 
 
 
@@ -34,7 +34,7 @@ def primera_iteracion_fm():
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
     datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espectro)
+    #print (espectro)
     return espectro, espuria, descision
             
 
@@ -66,10 +66,10 @@ def segunda_iteracion_fm():
         'canal 40': [95.8000,95.99000,'libre'],
         } 
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
-    datos=procesamiento(f_min,f_max,canales)
+    datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espectro)
-    return espectro
+    #print (espectro)
+    return espectro, espuria, descision
 
 def tercera_iteracion_fm():
 
@@ -100,10 +100,10 @@ def tercera_iteracion_fm():
         'canal 60': [99.8000,99.99000,'libre'],
         }  
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
-    datos=procesamiento(f_min,f_max,canales)
+    datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espectro)
-    return espectro
+    #print (espectro)
+    return espectro, espuria, descision
 
 def cuarta_iteracion_fm():
 
@@ -134,10 +134,10 @@ def cuarta_iteracion_fm():
         'canal 80': [103.8000,103.99000,'libre'],
         }  
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
-    datos=procesamiento(f_min,f_max,canales)
+    datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espectro)
-    return espectro
+    #print (espectro)
+    return espectro, espuria, descision
 
 def quinta_iteracion_fm():
 
@@ -168,8 +168,8 @@ def quinta_iteracion_fm():
         'canal 100': [107.8000,107.99000,'libre'],
         }  
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
-    datos=procesamiento(f_min,f_max,canales)
+    datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espectro)
-    return espectro
+    print (espuria)
+    return espectro, espuria, descision
 

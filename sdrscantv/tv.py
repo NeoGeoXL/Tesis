@@ -1,4 +1,4 @@
-from sdrscan import *
+from sdrscantv import *
 
 
 
@@ -43,9 +43,9 @@ def primera_iteracion_tv():
         'canal 6 - Libre 2': [85.70,88.000,'libre'],
         }
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
-    datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
+    datos, espuria , descision =procesamiento1(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espectro)
+    #print (espectro)
     return espectro, espuria, descision
             
 
@@ -97,9 +97,9 @@ def segunda_iteracion_tv():
         } 
     
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
-    datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
+    datos, espuria , descision =procesamiento2(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espectro)
+    #print (espectro)
     return espectro, espuria, descision
 
 def tercera_iteracion_tv():
@@ -148,7 +148,7 @@ def tercera_iteracion_tv():
         'canal 26 - Armonicos': [547.175,547.225,'usado'],
         'canal 26 - Libre 2': [547.226,548.000,'libre'],
 
-        'canal 27- Libre 1': [548.01,548.249,'libre'],
+        'canal 27 - Libre 1': [548.01,548.249,'libre'],
         'canal 27 - Video': [548.250,550.50,'usado'],
         'canal 27 - Libre 2': [550.60,552.49,'libre'],
         'canal 27 - Armonicos': [552.5,553.250,'usado'],
@@ -158,7 +158,7 @@ def tercera_iteracion_tv():
 
         'canal 28 - Libre 1': [554.01,560.00,'libre'],
 
-        'canal 29- Libre 1': [560.01,560.249,'libre'],
+        'canal 29 - Libre 1': [560.01,560.249,'libre'],
         'canal 29 - Video': [560.250,562.00,'usado'],
         'canal 29 - Libre 2': [562.01,564.49,'libre'],
         'canal 29 - Armonicos': [564.5,565.05,'usado'],
@@ -169,12 +169,12 @@ def tercera_iteracion_tv():
         'canal 30 - Libre 1': [566.01,572.00,'libre'],
         }  
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
-    datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
+    datos, espuria , descision =procesamiento3(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espectro)
+    #print (espectro) 
     return espectro, espuria, descision
 
-def cuarta_iteracion_fm():
+def cuarta_iteracion_tv():
 
     f_min = 572e6
     f_max = 632e6
@@ -220,18 +220,18 @@ def cuarta_iteracion_fm():
 
         'canal 39 - Libre 1': [620.01,623.69,'libre'],
         'canal 39 - Armonicos': [623.7,623.9,'usado'],
-        'canal 39 - Libre 2': [624.00,624.00,'libre'],
+        #'canal 39 - Libre 2': [624.00,624.00,'libre'],
 
 
         }  
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
-    datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
+    datos, espuria , descision =procesamiento4(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espectro)
+    #print (espectro)
     return espectro, espuria, descision
 
-def quinta_iteracion_fm():
+def quinta_iteracion_tv():
 
     f_min = 626e6
     f_max = 686e6
@@ -254,7 +254,7 @@ def quinta_iteracion_fm():
     
 
     #Espectro: Diccionario con los datos de las frecuencias y sus Potencias
-    datos, espuria , descision =procesamiento(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
+    datos, espuria , descision =procesamiento5(f_min,f_max,canales)      #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espectro)
+    #print (espectro)
     return espectro, espuria, descision

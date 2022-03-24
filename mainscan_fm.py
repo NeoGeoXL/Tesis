@@ -1,4 +1,4 @@
-from sdrscan.fm import *
+from sdrscanfm.fm import *
 
 def fm():
     primera_iteracion_fm()
@@ -8,6 +8,6 @@ def fm():
     quinta_iteracion_fm()
 
 
-
+fm()
 
 
