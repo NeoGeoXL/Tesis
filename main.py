@@ -72,7 +72,7 @@ def fm():
     data3=tercera_iteracion_fm()
     data4=cuarta_iteracion_fm()
     data5=quinta_iteracion_fm()'''
-
+ 
 
     context = {
         'username': username,
@@ -126,3 +126,18 @@ def alarmas():
     }
     print(alarmas)
     return render_template('alarmas.html',**context)
+
+
+@app.route('/pruebas', methods=['GET', 'POST'])
+@login_required
+def pruebas():
+    user_ip = session.get('user_ip')
+    username = current_user.id
+    alarmas = get_alarma_fm(user_id=username)
+    
+    context = {
+        'username': username,
+        'alarmas': alarmas,
+
+    }
+    return render_template('pruebas.html',**context)

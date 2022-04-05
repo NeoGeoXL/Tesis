@@ -17,7 +17,7 @@ def primera_iteracion_tv():
         'canal 2 - Audio': [59.69,59.81,'usado'],
         'canal 2 - Libre 4': [59.82,60.000,'libre'],
         
-        'canal 3 - Libre 1': [60.0001,61.149,'libre'],
+        'canal 3 - Libre 1': [60.001,61.149,'libre'],
         'canal 3 - Armonicos': [61.150,61.50,'usado'],
         'canal 3 - Libre 2': [61.51,66.000,'libre'],
 
@@ -56,7 +56,7 @@ def segunda_iteracion_tv():
 
     canales ={
 
-        'canal 7 - Libre 1': [174.00,180.00,'libre'],
+        'canal 7 - Libre 1': [174.00,180.00,'libre'],   #Probelmas con este canal rmse>1000
 
         'canal 8 - Libre 1': [180.01,180.49,'libre'],
         'canal 8 - Video': [180.50,182.250,'usado'],

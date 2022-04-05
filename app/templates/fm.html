@@ -13,6 +13,8 @@
     {% endif %}
 
     <h2>Prueba para FM</h2>
-    
+    {% block scripts %}
+    {% include 'chart.html' %}
+    {% endblock %}
     <h3>{{data1_fm}}</h3>
 {% endblock %}

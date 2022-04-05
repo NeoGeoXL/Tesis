@@ -85,18 +85,55 @@ def canal_filter(data,f_min_canal,f_max_canal):
     data_canal=data_canal.reset_index(drop=True)
     return data_canal
 
-def minima_senal_detectable(num):
-    return num
 
-
-def detection_limit(n,umbral,constante):
+def detection_limit(n,umbral=-45,constante=-45):
+    #umbral = -45
     if n <= umbral: 
         return constante
     else:
         return n
 
 
-def comparacion(senal_referencia,senal_comparacion):
+def ploteo_senal_comparacion_y_referencia(data_canal,senal_referencia,senal_comparacion,key):
+    #print(senal_comparacion) #82,1
+    #print(senal_referencia) #82,
+    #senal_comparacion = senal_comparacion.squeeze()
+    #print(' el shape de senal comparacion: ')
+    #print(senal_comparacion.shape)
+    #print(senal_comparacion.shape) #82,1
+    #print(senal_referencia.shape) #82,
+
+
+
+
+    data_canal_freqs=data_canal['Frecuencia']
+    data_canal_freqs = data_canal_freqs.to_numpy()
+    referencia_numpy = senal_referencia.to_numpy()
+    comparacion_numpy = senal_comparacion.to_numpy()
+
+    referencia_signal = np.stack((data_canal_freqs,  referencia_numpy), axis=1)
+    comparacion_signal = np.stack((data_canal_freqs,  comparacion_numpy), axis=1)
+    #print(referencia_signal)
+    #print(comparacion_signal)
+
+    plt.subplot(2,1,1)
+    plt.plot(referencia_signal[:,0],referencia_signal[:,1])
+    plt.title('Senal de referencia')
+    #plt.xlabel('Frecuencia [MHz]')
+    plt.ylabel('Potencia [dB]')
+    plt.subplot(2,1,2)
+    plt.plot(comparacion_signal[:,0],comparacion_signal[:,1])
+    plt.title('Senal de comparacion')
+    plt.xlabel('Frecuencia [MHz]')
+    plt.ylabel('Potencia [dB]')
+
+    plt.suptitle('Senales de referencia y comparacion del: {}'.format(key))
+    plt.show()
+
+
+def comparacion(data_canal,senal_referencia,senal_comparacion,key):
+    senal_comparacion=senal_comparacion.squeeze()
+    #ploteo_senal_comparacion_y_referencia(data_canal,senal_referencia,senal_comparacion,key)
 
 
     corr=senal_referencia.corr(senal_comparacion)
@@ -120,37 +157,65 @@ def minimun_signal_detectable(dict,data):
         condicicon=values[2]
         if condicicon=='libre':
             data_canal=canal_filter(data,values[0],values[1])
-            if data_canal['Potencia'].max() < -25:
+            if data_canal['Potencia'].max() < -35:
                 umbral = data_canal['Potencia'].max()
                 senal_referencia=data_canal['Potencia'].apply(detection_limit,args=(umbral,umbral))
+            else: 
+                umbral = data_canal['Potencia'].min()
+                senal_referencia=data_canal['Potencia'].apply(detection_limit,args=(umbral,umbral))
+
                 
     #print('El umbral es: '+ str(umbral)+' dBm'+' del '+str(key))
-    return umbral, senal_referencia   
+    return umbral, senal_referencia  
 
+def minima_senal_detectable_canal(data):
+    senal_referencia = data['Potencia'].apply(detection_limit,args=(-45,-45)) 
+    #plt.plot(senal_referencia)
+    return senal_referencia
+
+#Senal referencia = Senal leida con el sdr y con la tranmision no deseada
+#Senal comparacion = Senal creada a partir de la longitud del df y con los valores por defecto del umbral
+
+def crear_senal_comparacion(senal_referencia,umbral=-45):
+    senal_comparacion=np.empty(senal_referencia.shape[0])
+    senal_comparacion[:] = umbral
+    '''senal_comparacion = senal_comparacion.squeeze()
+    print(' el shape de senal comparacion: ')
+    print(senal_comparacion.shape)'''
+    senal_comparacion=pd.DataFrame(senal_comparacion)
+    #print(senal_comparacion)
+    return senal_comparacion
     
 def signal_coherence(senal_referencia,senal_comparacion):
     f, Cxy = signal.coherence(senal_referencia,senal_comparacion)
+    plt.plot(f, Cxy)
     return Cxy
 
 
-def run(data,f_min_canal,f_max_canal,umbral,senal_referencia):
+def filtrado_canal(data,f_min_canal,f_max_canal):
     data_canal=canal_filter(data,f_min_canal,f_max_canal)
     #umbral=data_canal['Potencia'].max()
     #senal_referencia=data_canal['Potencia'].apply(detection_limit,args=(umbral,umbral))
-    senal_comparacion=data_canal['Potencia'].apply(detection_limit,args=(umbral,umbral))
+    return data_canal
+
+
+def comparacion_senales(data_canal,senal_referencia,senal_comparacion,key):
 
     if senal_comparacion.shape[0] != senal_referencia.shape[0]:
         senal_comparacion=senal_comparacion[0:senal_referencia.shape[0]]
-    
-    corr,rmse = comparacion(senal_referencia,senal_comparacion)     #compararmos la senal con la misma solo para probar 
+    corr,rmse = comparacion(data_canal,senal_referencia,senal_comparacion,key)     #compararmos la senal con la misma solo para probar 
     #coherencia = signal_coherence(senal_referencia,senal_comparacion)
-    return corr, data_canal,rmse
+    #print('La coherencia es: '+ str(coherencia))
+    return corr,rmse
 
+
+    
+    
 def procesamiento(f_min,f_max,canales):
-    veces=50
+    veces=1
     rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, psd_array, freq_array, relative_power_array, psd_total= setup(f_min, f_max,veces)
     data=readsdr(rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, psd_array, freq_array, relative_power_array, psd_total,veces)
-    umbral,senal_referencia=minimun_signal_detectable(canales,data)
+    #umbral,senal_referencia=minimun_signal_detectable(canales,data)
 
     for key in canales:
         values=canales[key]
@@ -160,15 +225,20 @@ def procesamiento(f_min,f_max,canales):
             f_min_canal=values[0]
             f_max_canal=values[1]
 
-            corr,data_canal,rmse=run(data,f_min_canal,f_max_canal,umbral,senal_referencia)
-            #print('El rmse es: '+ str(rmse))
-            #print('La correlacion es ' + str(corr))
-            maxim=data_canal['Potencia'].max()
+            data_canal=filtrado_canal(data,f_min_canal,f_max_canal)
+            senal_referencia=minima_senal_detectable_canal(data_canal)
+            senal_comparacion = crear_senal_comparacion(senal_referencia,-45) 
+            #Faltaria la senal de referencia que tiene todos los valores iguales a -45
+            
+            corr, rmse = comparacion_senales(data_canal,senal_referencia,senal_comparacion,key)
+            #data_canal.to_csv(r'C:\Users\ggarc\Desktop\Tesis\matrizfm')
+
+            '''maxim=data_canal['Potencia'].max()
             idmax=data_canal['Potencia'].idxmax()
             parasita = data_canal.loc[idmax]
             max_freq=parasita['Frecuencia']
             max_pot=parasita['Potencia']
-            '''print(parasita)
+            print(parasita)
             print(max_freq)
             print(max_pot)
             espuria={
@@ -178,7 +248,9 @@ def procesamiento(f_min,f_max,canales):
             print(espuria)
             #par=parasita.to_dict()
             #print(par)'''
-            if corr < 0.5 and rmse > 10 :
+
+
+            if corr < 0.2 and rmse > 10 :
                 maxim=data_canal['Potencia'].max()
                 idmax=data_canal['Potencia'].idxmax()
                 #print(rmse)
@@ -189,19 +261,39 @@ def procesamiento(f_min,f_max,canales):
                     print(parasita)
                     print(max_freq)
                     print(max_pot)
+                    plt.subplot(2,1,1)
+                    plt.plot(data_canal['Frecuencia'],data_canal['Potencia'])
+                    plt.tilte('Senal Electromagnetica de '+str(key))
+                    plt.subplot(2,1,2)
+                    plt.plot(senal_referencia)
+                    plt.title('Senal Referencia')
+                    plt.show()
+
                     espuria={
                         'Frecuencia':max_freq,
                          'Potencia':max_pot,
                     }
-                    return data, espuria , 1 #El 1 indica que se encontro una espuria
+                    return data_canal, espuria , 1 #El 1 indica que se encontro una espuria
                     #Para la app web mandas un diccionario con 1 si hay una frecuencia parasita y el valor de la frecuencia y 0 si no hay frecuencia parasita
             else:
                 print('No hay interferencia en el ' + str(key))
+                print('El rmse es: '+ str(rmse))
+                print('La correlacion es ' + str(corr))
+                print('*'*50)
                 espuria={
                         'Frecuencia':0,
                          'Potencia':0,
                     }
-    
+   
+    data_numpy=data.to_numpy()
+    plt.plot(data_numpy[:,0],data_numpy[:,1])
+    plt.title('Grafica del espectro de Radio FM de: {} a {} [MHz]'.format(f_min/1e6,f_max/1e6))
+    plt.xlabel('Frecuencia [MHZ]')
+    plt.ylabel('Potencia [dB]')
+    plt.show()
+
+
+
     return data, espuria, 0 # El 0 indica que no se encontro una espuria
 
 def procesamiento_diccionarios(datos):
