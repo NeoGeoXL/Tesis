@@ -56,7 +56,7 @@ def segunda_iteracion_tv():
 
     canales ={
 
-        'canal 7 - Libre 1': [174.00,180.00,'libre'],   #Probelmas con este canal rmse>1000
+        'canal 7 - Libre 1': [174.00,180.00,'usado'],   #Probelmas con este canal rmse>1000
 
         'canal 8 - Libre 1': [180.01,180.49,'libre'],
         'canal 8 - Video': [180.50,182.250,'usado'],
@@ -86,13 +86,13 @@ def segunda_iteracion_tv():
 
         'canal 12 - Libre 1': [204.01,210.00,'libre'],
 
-        'canal 13 - Libre 1': [210.01,210.749,'libre'],
+        'canal 13 - Libre 1': [210.01,210.749,'usado'],
         'canal 13 - Video': [210.75,212.00,'usado'],
-        'canal 13 - Libre 2': [212.01,214.6,'libre'],
+        'canal 13 - Libre 2': [212.01,214.6,'usado'],
         'canal 13 - Armonicos': [214.7,215.10,'usado'],
-        #'canal 13 - Libre 3': [215.20,215.67,'libre'],
+        'canal 13 - Libre 3': [215.20,215.67,'usado'],
         'canal 13 - Audio': [215.68,215.81,'usado'],
-        #'canal 13 - Libre 4': [215.82,216.00,'libre'],
+        'canal 13 - Libre 4': [215.82,216.00,'usado'],
 
         } 
     

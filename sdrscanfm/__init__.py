@@ -87,7 +87,7 @@ def canal_filter(data,f_min_canal,f_max_canal):
     return data_canal
 
 
-def detection_limit(n,umbral=-45,constante=-45):
+def detection_limit(n,umbral=-46,constante=-46):
     #umbral = -45
     if n <= umbral: 
         return constante
@@ -187,14 +187,14 @@ def minimun_signal_detectable(dict,data):
     return umbral, senal_referencia  
 
 def minima_senal_detectable_canal(data):
-    senal_referencia = data['Potencia'].apply(detection_limit,args=(-45,-45)) 
+    senal_referencia = data['Potencia'].apply(detection_limit,args=(-29,-29)) 
     #plt.plot(senal_referencia)
     return senal_referencia
 
 #Senal referencia = Senal leida con el sdr y con la tranmision no deseada
 #Senal comparacion = Senal creada a partir de la longitud del df y con los valores por defecto del umbral
 
-def crear_senal_comparacion(senal_referencia,umbral=-35):
+def crear_senal_comparacion(senal_referencia,umbral=-29):
     senal_comparacion=np.empty(senal_referencia.shape[0])
     senal_comparacion[:] = umbral
     '''senal_comparacion = senal_comparacion.squeeze()
@@ -245,7 +245,7 @@ def procesamiento(f_min,f_max,canales,idx):
 
             data_canal=filtrado_canal(data,f_min_canal,f_max_canal)
             senal_referencia=minima_senal_detectable_canal(data_canal)
-            senal_comparacion = crear_senal_comparacion(senal_referencia,-45) 
+            senal_comparacion = crear_senal_comparacion(senal_referencia,-29) 
             #Faltaria la senal de referencia que tiene todos los valores iguales a -45
             
             corr, rmse = comparacion_senales(data_canal,senal_referencia,senal_comparacion,key)
@@ -268,29 +268,33 @@ def procesamiento(f_min,f_max,canales,idx):
             #print(par)'''
 
 
-            if corr < 0.2 and rmse > 10 :
+            if corr < 0.25 and rmse > 0.001 :
                 maxim=data_canal['Potencia'].max()
                 idmax=data_canal['Potencia'].idxmax()
                 #print(rmse)
-                if maxim > -20 and maxim < 200:
+                if maxim > -200 and maxim < 200:
                     parasita = data_canal.loc[idmax]
                     max_freq=parasita['Frecuencia']
                     max_pot=parasita['Potencia']
-                    print(parasita)
-                    print(max_freq)
-                    print(max_pot)
-                    plt.subplot(2,1,1)
+                    #print(parasita)
+                    #print(max_freq)
+                    #print(max_pot)
+                    plt.subplot(3,1,1)
                     plt.plot(data_canal['Frecuencia'],data_canal['Potencia'])
-                    plt.tilte('Senal Electromagnetica de '+str(key))
-                    plt.subplot(2,1,2)
+                    plt.title('Senal Electromagnetica de '+str(key))
+                    plt.subplot(3,1,2)
                     plt.plot(senal_referencia)
                     plt.title('Senal Referencia')
+                    plt.subplot(3,1,3)
+                    plt.plot(senal_comparacion)
+                    plt.title('Senal Comparacion')
                     plt.show()
 
                     espuria={
                         'Frecuencia':max_freq,
                          'Potencia':max_pot,
                     }
+                    print('La transmision no deseada se encuentra en {} con una potencia de: {}'.format(max_freq,max_pot))
                     return data_canal, espuria , 1 #El 1 indica que se encontro una espuria
                     #Para la app web mandas un diccionario con 1 si hay una frecuencia parasita y el valor de la frecuencia y 0 si no hay frecuencia parasita
             else:
