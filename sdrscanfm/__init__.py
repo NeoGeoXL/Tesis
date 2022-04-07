@@ -7,6 +7,7 @@ from datetime import datetime
 from scipy import signal
 import os
 from sklearn.metrics import mean_squared_error
+import pathlib
 
 
 
@@ -130,13 +131,30 @@ def ploteo_senal_comparacion_y_referencia(data_canal,senal_referencia,senal_comp
     plt.suptitle('Senales de referencia y comparacion del: {}'.format(key))
     plt.show()
 
+def correlacion(senal_referencia,senal_comparacion):
+    pass
+
+
 
 def comparacion(data_canal,senal_referencia,senal_comparacion,key):
     senal_comparacion=senal_comparacion.squeeze()
     #ploteo_senal_comparacion_y_referencia(data_canal,senal_referencia,senal_comparacion,key)
 
+    '''    senal_referencia_numpy = senal_referencia.to_numpy()
+    senal_comparacion_numpy = senal_comparacion.to_numpy()
+    correlacion_signal = np.stack((senal_referencia_numpy,  senal_comparacion_numpy), axis=1)
+    correlacion_df = pd.DataFrame(correlacion_signal,columns=['Referencia','Comparacion'])
 
+    print(correlacion_df)'''
+
+    '''senal_referencia_numpy = senal_referencia.to_numpy()
+    senal_comparacion_numpy = senal_comparacion.to_numpy()
+
+    corre = np.corrcoef(senal_referencia_numpy,senal_comparacion_numpy)
+    print('La correlacion con numpy es : {}'.format(corre))'''
+    
     corr=senal_referencia.corr(senal_comparacion)
+    #print(corr)
     corr_validation=np.isnan(corr)
     if corr_validation==True:
         corr=0.2
@@ -176,7 +194,7 @@ def minima_senal_detectable_canal(data):
 #Senal referencia = Senal leida con el sdr y con la tranmision no deseada
 #Senal comparacion = Senal creada a partir de la longitud del df y con los valores por defecto del umbral
 
-def crear_senal_comparacion(senal_referencia,umbral=-45):
+def crear_senal_comparacion(senal_referencia,umbral=-35):
     senal_comparacion=np.empty(senal_referencia.shape[0])
     senal_comparacion[:] = umbral
     '''senal_comparacion = senal_comparacion.squeeze()
@@ -211,7 +229,7 @@ def comparacion_senales(data_canal,senal_referencia,senal_comparacion,key):
 
     
     
-def procesamiento(f_min,f_max,canales):
+def procesamiento(f_min,f_max,canales,idx):
     veces=1
     rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, psd_array, freq_array, relative_power_array, psd_total= setup(f_min, f_max,veces)
     data=readsdr(rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, psd_array, freq_array, relative_power_array, psd_total,veces)
@@ -285,12 +303,23 @@ def procesamiento(f_min,f_max,canales):
                          'Potencia':0,
                     }
    
-    data_numpy=data.to_numpy()
+
+    CURRENT_DIR = pathlib.Path().resolve()  
+    #print(CURRENT_DIR)
+    IMAGE_DIR=CURRENT_DIR.joinpath("app","static","images","fm")
+    #print(IMAGE_DIR)
+    #print(IMAGE_DIR.exists())
+    IMAGE_DIR = str(IMAGE_DIR)
+
+
+    data_numpy=data.to_numpy()                  
     plt.plot(data_numpy[:,0],data_numpy[:,1])
-    plt.title('Grafica del espectro de Radio FM de: {} a {} [MHz]'.format(f_min/1e6,f_max/1e6))
+    plt.title('Grafica de la iteracion {} del espectro de Radio FM de: {} a {} [MHz]'.format(idx,f_min/1e6,f_max/1e6))
     plt.xlabel('Frecuencia [MHZ]')
     plt.ylabel('Potencia [dB]')
-    plt.show()
+    plt.savefig(IMAGE_DIR+'\espectro_iteracion_{}.png'.format(idx))
+    #plt.show()
+    
 
 
 

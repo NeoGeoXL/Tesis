@@ -13,8 +13,11 @@
     {% endif %}
 
     <h2>Prueba para FM</h2>
-    {% block scripts %}
-    {% include 'chart.html' %}
-    {% endblock %}
+
+    <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_1.png') }}">
+    <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_2.png') }}">
+    <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_3.png') }}">
+    <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_4.png') }}">
+    <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_5.png') }}">
     <h3>{{data1_fm}}</h3>
 {% endblock %}

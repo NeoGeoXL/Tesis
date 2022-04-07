@@ -68,10 +68,10 @@ def fm():
     username = current_user.id
 
     data1_fm, espuria, descision =primera_iteracion_fm()
-    '''data2=segunda_iteracion_fm()
+    data2=segunda_iteracion_fm()
     data3=tercera_iteracion_fm()
     data4=cuarta_iteracion_fm()
-    data5=quinta_iteracion_fm()'''
+    data5=quinta_iteracion_fm()
  
 
     context = {
@@ -84,6 +84,7 @@ def fm():
     put_alarma_fm(user_id=username, parasita=espuria)
     print(espuria)
     print(descision)
+
     return render_template('fm.html',**context)
 
 @app.route('/tv_uhf', methods=['GET', 'POST'])
