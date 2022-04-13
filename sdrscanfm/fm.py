@@ -175,6 +175,6 @@ def quinta_iteracion_fm():
     idx=5
     datos, espuria , descision =procesamiento(f_min,f_max,canales,idx)    #descion = 1 hay espuria, 0 no hay espuria
     espectro = procesamiento_diccionarios(datos)
-    print (espuria)
+    #print (espuria)
     return espectro, espuria, descision
 

@@ -8,16 +8,58 @@
 {% endblock %}
 
 {% block content %}
-    {% if username %}
-        <h1>Bienvenido, {{ username | capitalize }}</h1>
+    {% if descision_1 == 0 %}
+        <center><h2>Primera Iteración del Espectro FM: 88.00 MHz a 92.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_no_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_1.png') }}" width="700 px" height="400 px">
+    {% else %}
+        <center><h2>Primera Iteración del Espectro FM: 88.00 MHz a 92.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_si_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_1.png') }}"width="700 px" height="400 px">
+        <center><h3>La frecuencia no deseada se encuentra en: {{frecuencia_fm_1}} [Mhz] con una potencia de: {{potencia_fm_1}}</h3></center>
+    {% endif %}
+    
+
+    {% if descision_2 == 0 %}
+        <center><h2>Segunda Iteración del Espectro FM: 92.00 MHz a 96.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_no_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_2.png') }}" width="700 px" height="400 px">
+    {% else %}
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_si_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_2.png') }}"width="700 px" height="400 px">
+        <center><h3>La frecuencia no deseada se encuentra en: {{frecuencia_fm_2}} [Mhz] con una potencia de {{potencia_fm_2}}</h3></center>
     {% endif %}
 
-    <h2>Prueba para FM</h2>
 
-    <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_1.png') }}">
-    <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_2.png') }}">
-    <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_3.png') }}">
-    <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_4.png') }}">
-    <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_5.png') }}">
-    <h3>{{data1_fm}}</h3>
+    {% if descision_3 == 0 %}
+        <center><h2>Tercera Iteración del Espectro FM: 96.00 MHz a 100.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_no_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_3.png') }}" width="700 px" height="400 px">
+    {% else %}
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_si_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_3.png') }}"width="700 px" height="400 px">
+        <center><h3>La frecuencia no deseada se encuentra en: {{frecuencia_fm_3}} [Mhz] con una potencia de {{potencia_fm_3}}</h3></center>
+    {% endif %}
+
+    {% if descision_4 == 0 %}
+        <center><h2>Cuarta Iteración del Espectro FM: 100.00 MHz a 104.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_no_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_4.png') }}" width="700 px" height="400 px">
+    {% else %}
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_si_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_4.png') }}"width="700 px" height="400 px">
+        <center><h3>La frecuencia no deseada se encuentra en: {{frecuencia_fm_4}} [Mhz] con una potencia de {{potencia_fm_4}}</h3></center>
+    {% endif %}
+
+    {% if descision_5 == 0 %}
+        <center><h2>Quinta Iteración del Espectro FM: 104.00 MHz a 108.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_no_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_5.png') }}" width="700 px" height="400 px">
+    {% else %}
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_si_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/fm/espectro_iteracion_5.png') }}"width="700 px" height="400 px">
+        <center><h3>La frecuencia no deseada se encuentra en: {{frecuencia_fm_5}} [Mhz] con una potencia de {{potencia_fm_5}}</h3></center>
+    {% endif %}
+
+    
 {% endblock %}

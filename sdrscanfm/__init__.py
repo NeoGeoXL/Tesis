@@ -246,26 +246,11 @@ def procesamiento(f_min,f_max,canales,idx):
             data_canal=filtrado_canal(data,f_min_canal,f_max_canal)
             senal_referencia=minima_senal_detectable_canal(data_canal)
             senal_comparacion = crear_senal_comparacion(senal_referencia,-29) 
-            #Faltaria la senal de referencia que tiene todos los valores iguales a -45
-            
             corr, rmse = comparacion_senales(data_canal,senal_referencia,senal_comparacion,key)
             #data_canal.to_csv(r'C:\Users\ggarc\Desktop\Tesis\matrizfm')
-
-            '''maxim=data_canal['Potencia'].max()
-            idmax=data_canal['Potencia'].idxmax()
-            parasita = data_canal.loc[idmax]
-            max_freq=parasita['Frecuencia']
-            max_pot=parasita['Potencia']
-            print(parasita)
-            print(max_freq)
-            print(max_pot)
-            espuria={
-                    'Frecuencia':max_freq,
-                    'Potencia':max_pot,
-                    }
-            print(espuria)
-            #par=parasita.to_dict()
-            #print(par)'''
+            CURRENT_DIR = pathlib.Path().resolve()  
+            IMAGE_DIR=CURRENT_DIR.joinpath("app","static","images","fm")
+            IMAGE_DIR = str(IMAGE_DIR)
 
 
             if corr < 0.25 and rmse > 0.001 :
@@ -276,10 +261,17 @@ def procesamiento(f_min,f_max,canales,idx):
                     parasita = data_canal.loc[idmax]
                     max_freq=parasita['Frecuencia']
                     max_pot=parasita['Potencia']
-                    #print(parasita)
-                    #print(max_freq)
-                    #print(max_pot)
-                    plt.subplot(3,1,1)
+
+                    
+
+                    espuria={
+                        'Frecuencia':max_freq,
+                         'Potencia':max_pot,
+                    }
+
+                    descision = 1 
+
+                    '''plt.subplot(3,1,1)
                     plt.plot(data_canal['Frecuencia'],data_canal['Potencia'])
                     plt.title('Senal Electromagnetica de '+str(key))
                     plt.subplot(3,1,2)
@@ -288,14 +280,27 @@ def procesamiento(f_min,f_max,canales,idx):
                     plt.subplot(3,1,3)
                     plt.plot(senal_comparacion)
                     plt.title('Senal Comparacion')
-                    plt.show()
-
-                    espuria={
-                        'Frecuencia':max_freq,
-                         'Potencia':max_pot,
-                    }
+                    plt.show()'''
+                            
                     print('La transmision no deseada se encuentra en {} con una potencia de: {}'.format(max_freq,max_pot))
-                    return data_canal, espuria , 1 #El 1 indica que se encontro una espuria
+
+
+                    data_numpy=data.to_numpy() 
+                    plt.switch_backend('agg')                 
+                    plt.clf()                 
+                    plt.plot(data_numpy[:,0],data_numpy[:,1])
+                    plt.plot(espuria['Frecuencia'],espuria['Potencia'],marker='o',color='r',markersize=10)
+                    plt.grid()
+                    #plt.title('Grafica de la iteracion {} del espectro de Radio FM de: {} a {} [MHz]'.format(idx,f_min/1e6,f_max/1e6))
+                    plt.xlabel('Frecuencia [MHZ]')
+                    plt.ylabel('Potencia [dB]')
+                    plt.savefig(IMAGE_DIR+'\espectro_iteracion_{}.png'.format(idx))
+                    
+                    #plt.show()
+
+
+                    return data,espuria,descision
+
                     #Para la app web mandas un diccionario con 1 si hay una frecuencia parasita y el valor de la frecuencia y 0 si no hay frecuencia parasita
             else:
                 print('No hay interferencia en el ' + str(key))
@@ -306,28 +311,24 @@ def procesamiento(f_min,f_max,canales,idx):
                         'Frecuencia':0,
                          'Potencia':0,
                     }
-   
-
-    CURRENT_DIR = pathlib.Path().resolve()  
-    #print(CURRENT_DIR)
-    IMAGE_DIR=CURRENT_DIR.joinpath("app","static","images","fm")
-    #print(IMAGE_DIR)
-    #print(IMAGE_DIR.exists())
-    IMAGE_DIR = str(IMAGE_DIR)
-
+                descision = 0
 
     data_numpy=data.to_numpy()                  
+    plt.switch_backend('agg')                 
+    plt.clf()
     plt.plot(data_numpy[:,0],data_numpy[:,1])
-    plt.title('Grafica de la iteracion {} del espectro de Radio FM de: {} a {} [MHz]'.format(idx,f_min/1e6,f_max/1e6))
+    plt.grid()
+    #plt.title('Grafica de la iteracion {} del espectro de Radio FM de: {} a {} [MHz]'.format(idx,f_min/1e6,f_max/1e6))
     plt.xlabel('Frecuencia [MHZ]')
     plt.ylabel('Potencia [dB]')
     plt.savefig(IMAGE_DIR+'\espectro_iteracion_{}.png'.format(idx))
+    
     #plt.show()
+    return data,espuria,descision
     
 
 
 
-    return data, espuria, 0 # El 0 indica que no se encontro una espuria
 
 def procesamiento_diccionarios(datos):
     datos.set_index('Frecuencia',inplace=True)

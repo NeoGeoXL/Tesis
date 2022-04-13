@@ -8,11 +8,13 @@
 {% endblock %}
 
 {% block content %}
+    
+    <center><h1 style = "color: #dcdcdc;">ALGORITMO DE DETECCION DE TRANSMISIONES NO DESEADAS</h1></center>
+    <center><img  src="{{ url_for('static', filename='images/hello/1.jpg') }}" width="260 px" height="260 px" ></center>
     {% if username %}
-        <h1>Bienvenido, {{ username | capitalize }}</h1>
+         <h3 >Bienvenido, {{ username | capitalize }}, en esta pestaña encontraras toda la guia para el uso de esta aplicacion web, asi como el funcionamiento y tecnologia empleada para el desarrollo de este proyecto</h3> 
     {% endif %}
-    <h2>ALGORITMO DE DETECCION DE TRANSMISIONES NO DESEADAS</h2>
-    <h4>En esta pestaña encontraras toda la guia para el uso de esta aplicacion web </h4>
+    <h4></h4>
 
     
 

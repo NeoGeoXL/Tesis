@@ -1,0 +1,25 @@
+body{
+    margin: 300 px;
+    color:rgba(238, 220, 220, 0.925);
+    background-color: #464646e7;
+    font-family:sans-serif; 
+    }
+
+body h1{
+    font-style:serif;
+    font-weight:bold;
+    font-size:2.5em;
+    font-color:#891d1d;
+    font-family:'Helvetica','Verdana','Monaco',serif;
+}
+
+body h3{
+    font-style:serif;
+    font-weight:200;
+    font-size:1.5em;
+    margin: 300 px;
+    font-family:'Verdana','Monaco',serif;
+    text-indent: 1em;
+    text-align: left;
+}
+

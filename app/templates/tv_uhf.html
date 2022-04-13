@@ -8,11 +8,38 @@
 {% endblock %}
 
 {% block content %}
-    {% if username %}
-        <h1>Bienvenido, {{ username | capitalize }}</h1>
+    {% if descision_tv_3 == 0 %}
+        <center><h2>Tercera Iteración del Espectro TV UHF: 500.00 MHz a 572.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_no_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/tv/espectro_iteracion_tv_3.png') }}" width="700 px" height="400 px">
+    {% else %}
+    <center><h2>Tercera Iteración del Espectro TV UHF: 500.00 MHz a 572.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_si_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/tv/espectro_iteracion_tv_3.png') }}"width="700 px" height="400 px">
+        <center><h3>La frecuencia no deseada se encuentra en: {{frecuencia_tv_3}} [Mhz] con una potencia de: {{potencia_tv_3}}</h3></center>
     {% endif %}
 
-    <h2>Prueba para TV</h2>
-    
-    <h3>{{data1_tv}}</h3>
+    {% if descision_tv_4 == 0 %}
+        <center><h2>Cuarta Iteración del Espectro TV VHF: 572.00 MHz a 624.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_no_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/tv/espectro_iteracion_tv_4.png') }}" width="700 px" height="400 px">
+    {% else %}
+        <center><h2>Cuarta Iteración del Espectro TV VHF: 572.00 MHz a 624.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_si_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/tv/espectro_iteracion_tv_4.png') }}"width="700 px" height="400 px">
+        <center><h3>La frecuencia no deseada se encuentra en: {{frecuencia_tv_4}} [Mhz] con una potencia de: {{potencia_tv_4}}</h3></center>
+    {% endif %}
+
+    {% if descision_tv_5 == 0 %}
+        <center><h2>Quinta Iteración del Espectro TV VHF: 626.00 MHz a 686.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_no_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/tv/espectro_iteracion_tv_5.png') }}" width="700 px" height="400 px">
+    {% else %}
+        <center><h2>Quinta Iteración del Espectro TV VHF: 626.00 MHz a 686.00 MHz </h2></center>
+        <img src="{{ url_for('static', filename='images/mensajes/mensaje_si_hay_espuria.png') }}"width="300 px" height="300 px">
+        <img src="{{ url_for('static', filename='images/tv/espectro_iteracion_tv_5.png') }}"width="700 px" height="400 px">
+        <center><h3>La frecuencia no deseada se encuentra en: {{frecuencia_tv_5}} [Mhz] con una potencia de: {{potencia_tv_5}}</h3></center>
+    {% endif %}
+
+
 {% endblock %}
