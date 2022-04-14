@@ -8,11 +8,26 @@
 {% endblock %}
 
 {% block content %}
-    {% if username %}
-        <h1>Bienvenido, {{ username | capitalize }}</h1>
-    {% endif %}
-
-    <h2>Mis Alarmas</h2>
     
-    <h3>{{alarmas}}</h3>
+    <center><h2>Mis Alarmas</h2></center>
+    <table>
+        <tr>
+            <th>Frecuencia</th>
+            <th>Potencia</th>
+            <th>Fecha</th>
+            <th>Espectro</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for alarma in alarmas %}
+            <tr>
+                <td>{{ alarma.Frecuencia }}</td>
+                <td>{{ alarma.Potencia }}</td>
+                <td>{{ alarma.Fecha }}</td>
+                <td>{{ alarma.Espectro }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    
 {% endblock %}

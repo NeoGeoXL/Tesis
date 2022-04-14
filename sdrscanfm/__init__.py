@@ -8,6 +8,7 @@ from scipy import signal
 import os
 from sklearn.metrics import mean_squared_error
 import pathlib
+import time
 
 
 
@@ -251,11 +252,14 @@ def procesamiento(f_min,f_max,canales,idx):
             CURRENT_DIR = pathlib.Path().resolve()  
             IMAGE_DIR=CURRENT_DIR.joinpath("app","static","images","fm")
             IMAGE_DIR = str(IMAGE_DIR)
+            date = time.strftime('%d-%m-%Y %H:%M:%S', time.localtime())
+            espectro = 'FM'
 
 
             if corr < 0.25 and rmse > 0.001 :
                 maxim=data_canal['Potencia'].max()
                 idmax=data_canal['Potencia'].idxmax()
+
                 #print(rmse)
                 if maxim > -200 and maxim < 200:
                     parasita = data_canal.loc[idmax]
@@ -265,8 +269,10 @@ def procesamiento(f_min,f_max,canales,idx):
                     
 
                     espuria={
-                        'Frecuencia':max_freq,
-                         'Potencia':max_pot,
+                        'Fecha':date,
+                        'Espectro':espectro,
+                        'Potencia':max_pot,
+                        'Frecuencia':max_freq,  
                     }
 
                     descision = 1 
@@ -308,8 +314,10 @@ def procesamiento(f_min,f_max,canales,idx):
                 print('La correlacion es ' + str(corr))
                 print('*'*50)
                 espuria={
+                        'Espectro':espectro,
+                        'Fecha': date,
+                        'Potencia':0,
                         'Frecuencia':0,
-                         'Potencia':0,
                     }
                 descision = 0
 

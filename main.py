@@ -112,7 +112,8 @@ def fm():
     }
     
     #put_signal_fm(user_id=username, signal=data1_fm)
-    #put_alarma_fm(user_id=username, parasita=espuria)
+    print(espuria_1)
+    put_alarma_fm(user_id=username, parasita=espuria_1)
     #print(espuria)
     #print(descision)
 
@@ -145,7 +146,7 @@ def tv_vhf():
         'descision_tv_2': descision_tv_2,
 
     }
-    
+    put_alarma_fm(user_id=username, parasita=espuria_tv_1)
     return render_template('tv_vhf.html',**context)
 
 @app.route('/tv_uhf', methods=['GET', 'POST'])
@@ -183,7 +184,7 @@ def tv_uhf():
         'descision_tv_5': descision_tv_5,
     
     }
-    
+    put_alarma_fm(user_id=username, parasita=espuria_tv_3)
     return render_template('tv_uhf.html',**context)
 
  
@@ -199,20 +200,8 @@ def alarmas():
         'alarmas': alarmas,
 
     }
-    print(alarmas)
+    #print(alarmas)
+    alarmas.sort(key=lambda x: x['Fecha'], reverse=True)
     return render_template('alarmas.html',**context)
 
 
-@app.route('/pruebas', methods=['GET', 'POST'])
-@login_required
-def pruebas():
-    user_ip = session.get('user_ip')
-    username = current_user.id
-    alarmas = get_alarma_fm(user_id=username)
-    
-    context = {
-        'username': username,
-        'alarmas': alarmas,
-
-    }
-    return render_template('pruebas.html',**context)

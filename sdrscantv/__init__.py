@@ -372,6 +372,8 @@ def procesamiento1(f_min,f_max,canales):
             CURRENT_DIR = pathlib.Path().resolve()  
             IMAGE_DIR=CURRENT_DIR.joinpath("app","static","images","tv")
             IMAGE_DIR = str(IMAGE_DIR)
+            date = time.strftime('%d-%m-%Y %H:%M:%S', time.localtime())
+            espectro = 'TV VHF'
 
 
             if corr < 0.25 and rmse > 0.001 :
@@ -386,8 +388,10 @@ def procesamiento1(f_min,f_max,canales):
                     
 
                     espuria={
-                        'Frecuencia':max_freq,
-                         'Potencia':max_pot,
+                        'Fecha':date,
+                        'Espectro':espectro,
+                        'Potencia':max_pot,
+                        'Frecuencia':max_freq,  
                     }
 
                     descision = 1 
@@ -429,8 +433,10 @@ def procesamiento1(f_min,f_max,canales):
                 print('La correlacion es ' + str(corr))
                 print('*'*50)
                 espuria={
+                        'Espectro':espectro,
+                        'Fecha': date,
+                        'Potencia':0,
                         'Frecuencia':0,
-                         'Potencia':0,
                     }
                 descision = 0
 
@@ -469,6 +475,8 @@ def procesamiento2(f_min,f_max,canales):
             CURRENT_DIR = pathlib.Path().resolve()  
             IMAGE_DIR=CURRENT_DIR.joinpath("app","static","images","tv")
             IMAGE_DIR = str(IMAGE_DIR)
+            date = time.strftime('%d-%m-%Y %H:%M:%S', time.localtime())
+            espectro = 'TV VHF'
 
 
             if corr < 0.25 and rmse > 0.001 :
@@ -483,8 +491,10 @@ def procesamiento2(f_min,f_max,canales):
                     
 
                     espuria={
-                        'Frecuencia':max_freq,
-                         'Potencia':max_pot,
+                        'Fecha':date,
+                        'Espectro':espectro,
+                        'Potencia':max_pot,
+                        'Frecuencia':max_freq,  
                     }
 
                     descision = 1 
@@ -526,8 +536,10 @@ def procesamiento2(f_min,f_max,canales):
                 print('La correlacion es ' + str(corr))
                 print('*'*50)
                 espuria={
+                        'Espectro':espectro,
+                        'Fecha': date,
+                        'Potencia':0,
                         'Frecuencia':0,
-                         'Potencia':0,
                     }
                 descision = 0
 
@@ -566,6 +578,8 @@ def procesamiento3(f_min,f_max,canales):
             CURRENT_DIR = pathlib.Path().resolve()  
             IMAGE_DIR=CURRENT_DIR.joinpath("app","static","images","tv")
             IMAGE_DIR = str(IMAGE_DIR)
+            date = time.strftime('%d-%m-%Y %H:%M:%S', time.localtime())
+            espectro = 'TV UHF'
 
 
             if corr < 0.25 and rmse > 0.001 :
@@ -580,8 +594,10 @@ def procesamiento3(f_min,f_max,canales):
                     
 
                     espuria={
-                        'Frecuencia':max_freq,
-                         'Potencia':max_pot,
+                        'Fecha':date,
+                        'Espectro':espectro,
+                        'Potencia':max_pot,
+                        'Frecuencia':max_freq,  
                     }
 
                     descision = 1 
@@ -623,8 +639,10 @@ def procesamiento3(f_min,f_max,canales):
                 print('La correlacion es ' + str(corr))
                 print('*'*50)
                 espuria={
+                        'Espectro':espectro,
+                        'Fecha': date,
+                        'Potencia':0,
                         'Frecuencia':0,
-                         'Potencia':0,
                     }
                 descision = 0
 
@@ -664,6 +682,8 @@ def procesamiento4(f_min,f_max,canales):
             CURRENT_DIR = pathlib.Path().resolve()  
             IMAGE_DIR=CURRENT_DIR.joinpath("app","static","images","tv")
             IMAGE_DIR = str(IMAGE_DIR)
+            date = time.strftime('%d-%m-%Y %H:%M:%S', time.localtime())
+            espectro = 'TV UHF'
 
 
             if corr < 0.25 and rmse > 0.001 :
@@ -678,8 +698,10 @@ def procesamiento4(f_min,f_max,canales):
                     
 
                     espuria={
-                        'Frecuencia':max_freq,
-                         'Potencia':max_pot,
+                        'Fecha':date,
+                        'Espectro':espectro,
+                        'Potencia':max_pot,
+                        'Frecuencia':max_freq,  
                     }
 
                     descision = 1 
@@ -721,8 +743,10 @@ def procesamiento4(f_min,f_max,canales):
                 print('La correlacion es ' + str(corr))
                 print('*'*50)
                 espuria={
+                        'Espectro':espectro,
+                        'Fecha': date,
+                        'Potencia':0,
                         'Frecuencia':0,
-                         'Potencia':0,
                     }
                 descision = 0
 
@@ -763,11 +787,15 @@ def procesamiento5(f_min,f_max,canales):
             CURRENT_DIR = pathlib.Path().resolve()  
             IMAGE_DIR=CURRENT_DIR.joinpath("app","static","images","tv")
             IMAGE_DIR = str(IMAGE_DIR)
+            date = time.strftime('%d-%m-%Y %H:%M:%S', time.localtime())
+            espectro = 'TV UHF'
 
 
             if corr < 0.25 and rmse > 0.001 :
                 maxim=data_canal['Potencia'].max()
                 idmax=data_canal['Potencia'].idxmax()
+                date = datetime.datetime.now()
+                espectro = 'TV UHF'
                 #print(rmse)
                 if maxim > -200 and maxim < 200:
                     parasita = data_canal.loc[idmax]
@@ -777,8 +805,10 @@ def procesamiento5(f_min,f_max,canales):
                     
 
                     espuria={
-                        'Frecuencia':max_freq,
-                         'Potencia':max_pot,
+                        'Fecha':date,
+                        'Espectro':espectro,
+                        'Potencia':max_pot,
+                        'Frecuencia':max_freq,  
                     }
 
                     descision = 1 
@@ -819,9 +849,12 @@ def procesamiento5(f_min,f_max,canales):
                 print('El rmse es: '+ str(rmse))
                 print('La correlacion es ' + str(corr))
                 print('*'*50)
+                
                 espuria={
+                        'Espectro':espectro,
+                        'Fecha': date,
+                        'Potencia':0,
                         'Frecuencia':0,
-                         'Potencia':0,
                     }
                 descision = 0
 
