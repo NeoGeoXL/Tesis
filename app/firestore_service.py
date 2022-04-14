@@ -43,7 +43,7 @@ def put_signal_fm(user_id, signal):
     signal_ref_fm = db.collection('users').document(user_id).collection('DatosFM').document()
     signal_ref_fm.set(signal)
 
-def put_alarma_fm(user_id, parasita):
+def put_alarma(user_id, parasita):
     alarma_ref_fm = db.collection('users').document(user_id).collection('Alarmas').document()
     alarma_ref_fm.set(parasita)
 

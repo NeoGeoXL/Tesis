@@ -112,10 +112,21 @@ def fm():
     }
     
     #put_signal_fm(user_id=username, signal=data1_fm)
-    print(espuria_1)
-    put_alarma_fm(user_id=username, parasita=espuria_1)
-    #print(espuria)
-    #print(descision)
+    
+    if descision_1 == 1:
+        put_alarma(user_id=username, parasita=espuria_1)
+    
+    if descision_2 == 1:
+        put_alarma(user_id=username, parasita=espuria_2)
+    
+    if descision_3 == 1:
+        put_alarma(user_id=username, parasita=espuria_3)
+    
+    if descision_4 == 1:
+        put_alarma(user_id=username, parasita=espuria_4)
+    
+    if descision_5 == 1:
+        put_alarma(user_id=username, parasita=espuria_5)
 
     return render_template('fm.html',**context)
 
@@ -146,7 +157,13 @@ def tv_vhf():
         'descision_tv_2': descision_tv_2,
 
     }
-    put_alarma_fm(user_id=username, parasita=espuria_tv_1)
+
+    if descision_tv_1 == 1:
+        put_alarma(user_id=username, parasita=espuria_tv_1)
+    
+    if descision_tv_2 == 1:
+        put_alarma(user_id=username, parasita=espuria_tv_2)
+
     return render_template('tv_vhf.html',**context)
 
 @app.route('/tv_uhf', methods=['GET', 'POST'])
@@ -184,7 +201,16 @@ def tv_uhf():
         'descision_tv_5': descision_tv_5,
     
     }
-    put_alarma_fm(user_id=username, parasita=espuria_tv_3)
+
+    if descision_tv_3 == 1:
+        put_alarma(user_id=username, parasita=espuria_tv_3)
+    
+    if descision_tv_4 == 1:
+        put_alarma(user_id=username, parasita=espuria_tv_4)
+    
+    if descision_tv_5 == 1:
+        put_alarma(user_id=username, parasita=espuria_tv_5)
+        
     return render_template('tv_uhf.html',**context)
 
  
