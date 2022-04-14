@@ -794,8 +794,7 @@ def procesamiento5(f_min,f_max,canales):
             if corr < 0.25 and rmse > 0.001 :
                 maxim=data_canal['Potencia'].max()
                 idmax=data_canal['Potencia'].idxmax()
-                date = datetime.datetime.now()
-                espectro = 'TV UHF'
+                
                 #print(rmse)
                 if maxim > -200 and maxim < 200:
                     parasita = data_canal.loc[idmax]
