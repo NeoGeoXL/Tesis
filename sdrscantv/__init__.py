@@ -159,7 +159,6 @@ def setup5(f_min, f_max,veces):
     #time_array = np.zeros([npsd_res,nfreq],dtype='datetime64[s]')
     relative_power_array = np.zeros([npsd_res,nfreq])
 
-
     #Configuracion de dataframes para el MAXHOLD
     len=freq_array.shape[0]
     
@@ -167,12 +166,12 @@ def setup5(f_min, f_max,veces):
 
     return rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, psd_array, freq_array, relative_power_array, psd_total
 
-
+#curva de deteccion para saber como se detecta
 def readsdr(rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, psd_array, freq_array, relative_power_array, psd_total,veces):
     #Initializing SDR
     sdr = rtlsdr.RtlSdr()
     sdr.sample_rate = rate_best
-    sdr.gain = 0
+    sdr.gain = 30
     samp_rate = sdr.sample_rate 
     for k in range(veces):
         for i,freq in enumerate(freqs):

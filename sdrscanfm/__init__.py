@@ -22,6 +22,7 @@ def setup(f_min, f_max,veces):
    
     rate_best = 2.4e6
     df = rate_best
+    
 
 
     # Set up the scan
@@ -46,13 +47,13 @@ def setup(f_min, f_max,veces):
     psd_total=np.empty([len*2,veces])
 
     return rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, psd_array, freq_array, relative_power_array, psd_total
-
+#db microvoltio / metro
 
 def readsdr(rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, psd_array, freq_array, relative_power_array, psd_total,veces):
     #Initializing SDR
     sdr = rtlsdr.RtlSdr()
     sdr.sample_rate = rate_best
-    sdr.gain = 0
+    sdr.gain = 20
     samp_rate = sdr.sample_rate 
     for k in range(veces):
         for i,freq in enumerate(freqs):
@@ -256,7 +257,7 @@ def procesamiento(f_min,f_max,canales,idx):
             espectro = 'FM'
 
 
-            if corr < 0.25 and rmse > 0.001 :
+            if corr < 0.25 and rmse > 0.01 :
                 maxim=data_canal['Potencia'].max()
                 idmax=data_canal['Potencia'].idxmax()
 
