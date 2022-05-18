@@ -89,12 +89,7 @@ def canal_filter(data,f_min_canal,f_max_canal):
     return data_canal
 
 
-def detection_limit(n,umbral=-46,constante=-46):
-    #umbral = -45
-    if n <= umbral: 
-        return constante
-    else:
-        return n
+
 
 
 def ploteo_senal_comparacion_y_referencia(data_canal,senal_referencia,senal_comparacion,key):
@@ -105,9 +100,6 @@ def ploteo_senal_comparacion_y_referencia(data_canal,senal_referencia,senal_comp
     #print(senal_comparacion.shape)
     #print(senal_comparacion.shape) #82,1
     #print(senal_referencia.shape) #82,
-
-
-
 
     data_canal_freqs=data_canal['Frecuencia']
     data_canal_freqs = data_canal_freqs.to_numpy()
@@ -132,9 +124,6 @@ def ploteo_senal_comparacion_y_referencia(data_canal,senal_referencia,senal_comp
 
     plt.suptitle('Senales de referencia y comparacion del: {}'.format(key))
     plt.show()
-
-def correlacion(senal_referencia,senal_comparacion):
-    pass
 
 
 
@@ -170,33 +159,24 @@ def comparacion(data_canal,senal_referencia,senal_comparacion,key):
         rmse=min(rmse_list)
     return corr,rmse
 
-
-def minimun_signal_detectable(dict,data):
-    for key in dict:
-        values=dict[key]
-        condicicon=values[2]
-        if condicicon=='libre':
-            data_canal=canal_filter(data,values[0],values[1])
-            if data_canal['Potencia'].max() < -35:
-                umbral = data_canal['Potencia'].max()
-                senal_referencia=data_canal['Potencia'].apply(detection_limit,args=(umbral,umbral))
-            else: 
-                umbral = data_canal['Potencia'].min()
-                senal_referencia=data_canal['Potencia'].apply(detection_limit,args=(umbral,umbral))
-
-                
-    #print('El umbral es: '+ str(umbral)+' dBm'+' del '+str(key))
-    return umbral, senal_referencia  
+def detection_limit(n,umbral,constante):
+    #umbral = -45
+    if n <= umbral: 
+        return constante
+    else:
+        return n
 
 def minima_senal_detectable_canal(data):
-    senal_referencia = data['Potencia'].apply(detection_limit,args=(-29,-29)) 
+    senal_referencia = data['Potencia'].apply(detection_limit,args=(-29,-29))   #args=-45,-45
     #plt.plot(senal_referencia)
     return senal_referencia
+
+
 
 #Senal referencia = Senal leida con el sdr y con la tranmision no deseada
 #Senal comparacion = Senal creada a partir de la longitud del df y con los valores por defecto del umbral
 
-def crear_senal_comparacion(senal_referencia,umbral=-29):
+def crear_senal_comparacion(senal_referencia,umbral):
     senal_comparacion=np.empty(senal_referencia.shape[0])
     senal_comparacion[:] = umbral
     '''senal_comparacion = senal_comparacion.squeeze()
@@ -206,11 +186,6 @@ def crear_senal_comparacion(senal_referencia,umbral=-29):
     #print(senal_comparacion)
     return senal_comparacion
     
-def signal_coherence(senal_referencia,senal_comparacion):
-    f, Cxy = signal.coherence(senal_referencia,senal_comparacion)
-    plt.plot(f, Cxy)
-    return Cxy
-
 
 def filtrado_canal(data,f_min_canal,f_max_canal):
     data_canal=canal_filter(data,f_min_canal,f_max_canal)

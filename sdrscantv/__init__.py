@@ -10,6 +10,7 @@ from sklearn.metrics import mean_squared_error
 import pathlib
 
 
+
 def hacer_potencia(psd_max):
     potencia=10*np.log10(psd_max)
     return potencia
@@ -171,7 +172,7 @@ def readsdr(rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samp
     #Initializing SDR
     sdr = rtlsdr.RtlSdr()
     sdr.sample_rate = rate_best
-    sdr.gain = 30
+    sdr.gain = 0
     samp_rate = sdr.sample_rate 
     for k in range(veces):
         for i,freq in enumerate(freqs):
@@ -208,12 +209,7 @@ def canal_filter(data,f_min_canal,f_max_canal):
     data_canal=data_canal.reset_index(drop=True)
     return data_canal
 
-def detection_limit(n,umbral=-45,constante=-45):
-    #umbral = -45
-    if n <= umbral: 
-        return constante
-    else:
-        return n
+
 
 def ploteo_senal_comparacion_y_referencia(data_canal,senal_referencia,senal_comparacion,key):
     #print(senal_comparacion) #82,1
@@ -251,8 +247,6 @@ def ploteo_senal_comparacion_y_referencia(data_canal,senal_referencia,senal_comp
     plt.suptitle('Senales de referencia y comparacion del: {}'.format(key))
     plt.show()
 
-def correlacion(senal_referencia,senal_comparacion):
-    pass
 
 
 
@@ -288,23 +282,12 @@ def comparacion(data_canal,senal_referencia,senal_comparacion,key):
         rmse=min(rmse_list)
     return corr,rmse
 
-
-def minimun_signal_detectable(dict,data):
-    for key in dict:
-        values=dict[key]
-        condicicon=values[2]
-        if condicicon=='libre':
-            data_canal=canal_filter(data,values[0],values[1])
-            if data_canal['Potencia'].max() < -35:
-                umbral = data_canal['Potencia'].max()
-                senal_referencia=data_canal['Potencia'].apply(detection_limit,args=(umbral,umbral))
-            else: 
-                umbral = data_canal['Potencia'].min()
-                senal_referencia=data_canal['Potencia'].apply(detection_limit,args=(umbral,umbral))
-
-                
-    #print('El umbral es: '+ str(umbral)+' dBm'+' del '+str(key))
-    return umbral, senal_referencia  
+def detection_limit(n,umbral,constante):
+    #umbral = -45
+    if n <= umbral: 
+        return constante
+    else:
+        return n
 
 def minima_senal_detectable_canal(data):
     senal_referencia = data['Potencia'].apply(detection_limit,args=(-29,-29))   #-29 para primera iteracion
@@ -324,11 +307,6 @@ def crear_senal_comparacion(senal_referencia,umbral):
     #print(senal_comparacion)
     return senal_comparacion
     
-def signal_coherence(senal_referencia,senal_comparacion):
-    f, Cxy = signal.coherence(senal_referencia,senal_comparacion)
-    plt.plot(f, Cxy)
-    return Cxy
-
 
 def filtrado_canal(data,f_min_canal,f_max_canal):
     data_canal=canal_filter(data,f_min_canal,f_max_canal)
