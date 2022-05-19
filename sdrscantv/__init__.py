@@ -4,8 +4,6 @@ import numpy as np
 import time
 import pandas as pd
 from datetime import datetime
-from scipy import signal
-import os
 from sklearn.metrics import mean_squared_error
 import pathlib
 
@@ -25,7 +23,7 @@ def setup1(f_min, f_max,veces):
     # Set up the scan
     freqs = np.arange(f_min + df/2.,f_max,df)
     nfreq = freqs.shape[0]  
-    npsd_res = 1024
+    npsd_res = 512
     npsd_avg = 256
     nsamp = npsd_res*npsd_avg
     nfreq_spec = nfreq*npsd_res 
@@ -55,7 +53,7 @@ def setup2(f_min, f_max,veces):
     # Set up the scan
     freqs = np.arange(f_min + df/2.,f_max,df)
     nfreq = freqs.shape[0]  
-    npsd_res = 1024
+    npsd_res = 256
     npsd_avg = 256
     nsamp = npsd_res*npsd_avg
     nfreq_spec = nfreq*npsd_res 
@@ -86,7 +84,7 @@ def setup3(f_min, f_max,veces):
     # Set up the scan
     freqs = np.arange(f_min + df/2.,f_max,df)
     nfreq = freqs.shape[0]  
-    npsd_res = 1024
+    npsd_res = 256
     npsd_avg = 256
     nsamp = npsd_res*npsd_avg
     nfreq_spec = nfreq*npsd_res 
@@ -117,7 +115,7 @@ def setup4(f_min, f_max,veces):
     # Set up the scan
     freqs = np.arange(f_min + df/2.,f_max,df)
     nfreq = freqs.shape[0]  
-    npsd_res = 1024
+    npsd_res = 512
     npsd_avg = 256
     nsamp = npsd_res*npsd_avg
     nfreq_spec = nfreq*npsd_res 
@@ -148,7 +146,7 @@ def setup5(f_min, f_max,veces):
     # Set up the scan
     freqs = np.arange(f_min + df/2.,f_max,df)
     nfreq = freqs.shape[0]  
-    npsd_res = 1024
+    npsd_res = 512
     npsd_avg = 256
     nsamp = npsd_res*npsd_avg
     nfreq_spec = nfreq*npsd_res 
