@@ -10,7 +10,7 @@ def primera_iteracion_fm():
     
     canales ={
         'canal 1': [88.0000,88.19000,'usado'],
-        'canal 2': [88.2000,88.39000,'libre'],
+        'canal 2': [88.2000,88.36000,'libre'],
         'canal 3': [88.4000,88.59000,'usado'],
         'canal 4': [88.6250,88.79000,'libre'],
         'canal 5': [88.8000,88.99000,'libre'],
@@ -58,9 +58,9 @@ def segunda_iteracion_fm():
         'canal 31': [94.0000,94.19000,'usado'],
         'canal 32': [94.2000,94.39000,'libre'],
         'canal 33': [94.4000,94.59000,'usado'],
-        'canal 34': [94.6000,94.79000,'libre'],
-        'canal 35': [94.8000,94.99000,'usado'],
-        'canal 36': [95.0000,95.19000,'libre'],
+        'canal 34': [94.6000,94.77000,'libre'],
+        'canal 35': [94.8000,94.5000,'usado'],
+        'canal 36': [95.100,95.19000,'libre'],
         'canal 37': [95.2000,95.39000,'usado'],
         'canal 38': [95.4000,95.59000,'libre'],
         'canal 39': [95.6000,95.79000,'usado'],

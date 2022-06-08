@@ -170,7 +170,7 @@ def readsdr(rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samp
     #Initializing SDR
     sdr = rtlsdr.RtlSdr()
     sdr.sample_rate = rate_best
-    sdr.gain = 0
+    sdr.gain = 2
     samp_rate = sdr.sample_rate 
     for k in range(veces):
         for i,freq in enumerate(freqs):
