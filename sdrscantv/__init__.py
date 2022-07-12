@@ -6,7 +6,7 @@ import pandas as pd
 from datetime import datetime
 from sklearn.metrics import mean_squared_error
 import pathlib
-
+umbral = -48
 
 
 def hacer_potencia(psd_max):
@@ -287,8 +287,9 @@ def detection_limit(n,umbral,constante):
     else:
         return n
 
-def minima_senal_detectable_canal(data):
-    senal_referencia = data['Potencia'].apply(detection_limit,args=(-29,-29))   #-29 para primera iteracion
+def minima_senal_detectable_canal(data,umbral):
+    #senal_referencia = data['Potencia'].apply(detection_limit,args=(-29,-29))   #args=-45,-45
+    senal_referencia = data['Potencia'].apply(detection_limit,args=(umbral,umbral))
     #plt.plot(senal_referencia)
     return senal_referencia
 
@@ -311,6 +312,7 @@ def filtrado_canal(data,f_min_canal,f_max_canal):
     #umbral=data_canal['Potencia'].max()
     #senal_referencia=data_canal['Potencia'].apply(detection_limit,args=(umbral,umbral))
     return data_canal
+
 
 
 def comparacion_senales(data_canal,senal_referencia,senal_comparacion,key):
@@ -340,8 +342,9 @@ def procesamiento1(f_min,f_max,canales):
             f_max_canal=values[1]
 
             data_canal=filtrado_canal(data,f_min_canal,f_max_canal)
-            senal_referencia=minima_senal_detectable_canal(data_canal)
-            senal_comparacion = crear_senal_comparacion(senal_referencia,-29) 
+            #umbral = -48
+            senal_referencia=minima_senal_detectable_canal(data_canal,umbral)
+            senal_comparacion = crear_senal_comparacion(senal_referencia,umbral)
             corr, rmse = comparacion_senales(data_canal,senal_referencia,senal_comparacion,key)
             #data_canal.to_csv(r'C:\Users\ggarc\Desktop\Tesis\matrizfm')
             CURRENT_DIR = pathlib.Path().resolve()  
@@ -443,8 +446,9 @@ def procesamiento2(f_min,f_max,canales):
             f_max_canal=values[1]
 
             data_canal=filtrado_canal(data,f_min_canal,f_max_canal)
-            senal_referencia=minima_senal_detectable_canal(data_canal)
-            senal_comparacion = crear_senal_comparacion(senal_referencia,-29) 
+            #umbral = -48
+            senal_referencia=minima_senal_detectable_canal(data_canal,umbral)
+            senal_comparacion = crear_senal_comparacion(senal_referencia,umbral)
             corr, rmse = comparacion_senales(data_canal,senal_referencia,senal_comparacion,key)
             #data_canal.to_csv(r'C:\Users\ggarc\Desktop\Tesis\matrizfm')
             CURRENT_DIR = pathlib.Path().resolve()  
@@ -546,8 +550,9 @@ def procesamiento3(f_min,f_max,canales):
             f_max_canal=values[1]
 
             data_canal=filtrado_canal(data,f_min_canal,f_max_canal)
-            senal_referencia=minima_senal_detectable_canal(data_canal)
-            senal_comparacion = crear_senal_comparacion(senal_referencia,-29) 
+            #umbral = -48
+            senal_referencia=minima_senal_detectable_canal(data_canal,umbral)
+            senal_comparacion = crear_senal_comparacion(senal_referencia,umbral)
             corr, rmse = comparacion_senales(data_canal,senal_referencia,senal_comparacion,key)
             #data_canal.to_csv(r'C:\Users\ggarc\Desktop\Tesis\matrizfm')
             CURRENT_DIR = pathlib.Path().resolve()  
@@ -650,8 +655,9 @@ def procesamiento4(f_min,f_max,canales):
             f_max_canal=values[1]
 
             data_canal=filtrado_canal(data,f_min_canal,f_max_canal)
-            senal_referencia=minima_senal_detectable_canal(data_canal)
-            senal_comparacion = crear_senal_comparacion(senal_referencia,-29) 
+            #umbral = -48
+            senal_referencia=minima_senal_detectable_canal(data_canal,umbral)
+            senal_comparacion = crear_senal_comparacion(senal_referencia,umbral)
             corr, rmse = comparacion_senales(data_canal,senal_referencia,senal_comparacion,key)
             #data_canal.to_csv(r'C:\Users\ggarc\Desktop\Tesis\matrizfm')
             CURRENT_DIR = pathlib.Path().resolve()  
@@ -755,8 +761,9 @@ def procesamiento5(f_min,f_max,canales):
             f_max_canal=values[1]
 
             data_canal=filtrado_canal(data,f_min_canal,f_max_canal)
-            senal_referencia=minima_senal_detectable_canal(data_canal)
-            senal_comparacion = crear_senal_comparacion(senal_referencia,-29) 
+            #umbral = -48
+            senal_referencia=minima_senal_detectable_canal(data_canal,umbral)
+            senal_comparacion = crear_senal_comparacion(senal_referencia,umbral)
             corr, rmse = comparacion_senales(data_canal,senal_referencia,senal_comparacion,key)
             #data_canal.to_csv(r'C:\Users\ggarc\Desktop\Tesis\matrizfm')
             CURRENT_DIR = pathlib.Path().resolve()  
