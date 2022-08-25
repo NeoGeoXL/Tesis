@@ -75,13 +75,8 @@ def setup2(f_min, f_max,veces):
 
 
 def setup3(f_min, f_max,veces):
-    #Frecuency range and step
-   
     rate_best = 2.4e6
     df = rate_best
-
-
-    # Set up the scan
     freqs = np.arange(f_min + df/2.,f_max,df)
     nfreq = freqs.shape[0]  
     npsd_res = 256
@@ -89,13 +84,11 @@ def setup3(f_min, f_max,veces):
     nsamp = npsd_res*npsd_avg
     nfreq_spec = nfreq*npsd_res 
     samples = np.zeros([nsamp,nfreq],dtype='complex128') 
-
     #Setting the data lists 
     psd_array = np.zeros([npsd_res,nfreq])
     freq_array = np.zeros([npsd_res,nfreq])
     #time_array = np.zeros([npsd_res,nfreq],dtype='datetime64[s]')
     relative_power_array = np.zeros([npsd_res,nfreq])
-
 
     #Configuracion de dataframes para el MAXHOLD
     len=freq_array.shape[0]

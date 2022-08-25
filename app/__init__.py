@@ -21,7 +21,6 @@ def create_app():
     login_manager.init_app(app)
     app.register_blueprint(auth)
 
-
     return app
 
 @login_manager.user_loader

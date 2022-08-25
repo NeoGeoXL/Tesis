@@ -26,8 +26,8 @@ def setup(f_min, f_max,veces):
     # Set up the scan
     freqs = np.arange(f_min + df/2.,f_max,df)
     nfreq = freqs.shape[0]  
-    npsd_res = 512
-    npsd_avg = 256
+    npsd_res = 512  # frequency resolution (number of samples in psd)
+    npsd_avg = 256  # number of PSDs to average
     nsamp = npsd_res*npsd_avg
     nfreq_spec = nfreq*npsd_res 
     samples = np.zeros([nsamp,nfreq],dtype='complex128') 
@@ -47,7 +47,8 @@ def setup(f_min, f_max,veces):
     return rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, psd_array, freq_array, relative_power_array, psd_total
 #db microvoltio / metro
 
-def readsdr(rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, psd_array, freq_array, relative_power_array, psd_total,veces):
+def readsdr(rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samples, 
+    psd_array, freq_array, relative_power_array, psd_total,veces):
     #Initializing SDR
     sdr = rtlsdr.RtlSdr()
     sdr.sample_rate = rate_best
@@ -60,20 +61,14 @@ def readsdr(rate_best, freqs, nfreq, npsd_res, npsd_avg, nsamp, nfreq_spec, samp
     for i,freq in enumerate(freqs):   
         fc_mhz = freq/1e6
         bw_mhz = sdr.sample_rate/1e6  
-        psd_array[:,i],freq_array[:,i] = plt.psd(samples[:,i], NFFT=npsd_res, Fs=bw_mhz, Fc=fc_mhz)
-    #print(psd_array)
+        psd_array[:,i],freq_array[:,i] = plt.psd(samples[:,i], NFFT=npsd_res, Fs=bw_mhz, Fc=fc_mhz) #NFFT:The number of data points used in each block for the FFT.
     freq_series=np.concatenate(freq_array)
     psd_series=np.concatenate(psd_array)
-    #print(k)
-    #psd=pd.DataFrame(psd_series)
     psd_total=np.insert(psd_total,k,psd_series,axis=1)
-
     sdr.close()
-
     psd_total=pd.DataFrame(psd_total)
     psd_new=psd_total.loc[:,0:veces-1]
     psd_max=psd_new.max(axis=1)
-
     max_hold=psd_max.apply(hacer_potencia)
     data_array = np.stack((freq_series, max_hold), axis=1)
     df=pd.DataFrame(data_array,columns=['Frecuencia','Potencia'])
